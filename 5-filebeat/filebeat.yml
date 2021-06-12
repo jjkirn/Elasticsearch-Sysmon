@@ -1,0 +1,4 @@
+############# filebeat.yml ################
+
+output.logstash:
+  hosts: ["logstash:5000"]
