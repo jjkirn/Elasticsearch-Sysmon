@@ -20,10 +20,22 @@ RUN mkdir /var/lib/nginx
 RUN chown -R www-data:www-data /var/lib/nginx
 # Create user:passwd (admin:Mich2009MI) for the web login
 RUN echo "admin:`openssl passwd -apr1 Mich2009MI`" | tee -a /etc/nginx/htpasswd.users
+
+# Add SSL Certificates - jjk 6/13/21
+ADD sysmon.crt /etc/ssl/sysmon.crt
+ADD sysmon.key /etc/ssl/sysmon.key
+
 # Remove old config
 RUN rm -v /etc/nginx/nginx.conf
 # Add new config
 ADD nginx.conf /etc/nginx/
+
+# Add the hosts' ca certificate store
+# first remove any existing one
+RUN rm -v /etc/ssl/certs/ca-certificates.crt
+# Now add the hosts' one
+ADD ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+
 # Nginx uses the daemon off directive to run in the foreground. 
 # CMD ["nginx","-g","daemon off;"]
 
