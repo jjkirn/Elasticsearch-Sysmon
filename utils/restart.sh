@@ -42,7 +42,7 @@ echo "Removing container /nginx"
 docker container rm /nginx
 # run the new container
 echo "Creating new container /nginx"
-docker run --name nginx -d -p 80:80 --link logstash:logstash -v /docker_nginx:/var/log/nginx -v /docker_syslog:/var/log/syslog nginx_image
+docker run --name nginx -d -p 80:80 -p 443:443--link logstash:logstash -v /docker_nginx:/var/log/nginx -v /docker_syslog:/var/log/syslog nginx_image
 
 # list all running containers
 docker container ps
